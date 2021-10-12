@@ -1,0 +1,17 @@
+Package: CAMLU
+Type: Package
+Title: Cell Annotation with the presence of unknown cells
+Version: 0.1.0
+Author: Ziyi Li and Yizhuo Wang
+Maintainer: Ziyi Li <zli16@mdanderson.org>
+Description: Provide an autoencoder based method for annotation cell types from scRNA-seq data. The function can identify unknown cells with the input training data. CAMLU also can annotate the full lists of cell types with consideration of unknown cell type.
+License: GPL-2
+Encoding: UTF-8
+LazyData: false
+Depends: R (>= 3.6), keras, tensorflow, e1071, scuttle
+biocViews: scRNAseq, gene expression, single cell, cell annotation, unknown cells
+BugReports: https://github.com/ziyili20/CAMLU/issues
+Imports: scran, SingleCellExperiment, genefilter
+Suggests: BiocStyle, knitr, rmarkdown, matrixStats, Matrix, mclust
+VignetteBuilder: knitr
+
