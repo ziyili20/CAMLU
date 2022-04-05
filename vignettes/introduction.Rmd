@@ -1,0 +1,78 @@
+---
+title: "Vignette for the CAMLU Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+CAMLU is an R package that Provide an autoencoder based method for annotation cell types from scRNA-seq data. The function can identify unknown cells with the input training data. It also can annotate the full lists of cell types with consideration of unknown cell type. This vignette introduces the CAMLU function and the things it can do for you. CAMLU was created by Ziyi Li, Yizhuo Wang, Irene Ganan-Gomez, Simona Colla and Kim-Anh Do, and is now maintained by Ziyi Li (<u>zli16@mdanderson.org</u>).  
+
+Install **CAMLU** from the GitHub repo using the devtools package.
+```{r setup, eval = FALSE}
+install.packages("devtools")
+library(devtools)
+
+install_github("ziyili20/CAMLU")
+library(CAMLU)
+```
+  
+**CAMLU** automatically identifies novel cells from single cell RNA sequencing (scRNA-seq) data and annotates the full range of cell types. A real-world single cell datasets for peripheral blood mononuclear cells (PBMC) (Zheng *et al.*, 2017) has been included in this package, and is used here to demonstrate the usage of the function.
+
+## CAMLU function
+
+The main function has 6 inputs: 
+
+* x_train: a scRNA-seq dataset as the training data.
+* x_test: another scRNA-seq dataset as the testing data, note that the function identifies the cell type that is not present in the training data, only exists in the testing data.
+* full_annotation: an optional step to annotate the full range of cell types; the default is FALSE.
+* y_train: full labels of the training data; should be provided if full_annotation is set up to TRUE.
+* ngene: the number of top variable genes in the feature selection step for identifying unknown cells; if missing, it will be defaulted to 5000.
+* lognormalize: the log10 normalization step applying to training
+and testing datasets; the default is TRUE unless specify.
+
+```{r message=FALSE, warning=FALSE, fig.height=5, fig.width=7}
+## Load data
+library(CAMLU)
+data(PBMC_tumor_simulation_data)
+
+## Distinguish novel cells from known cell types
+label_01 <- CAMLU(x_train = simdata$fdata_train,
+      x_test = simdata$fdata_test,
+      ngene=5000,log=TRUE)
+
+## Display the classification table
+truelabel <- simdata$labels_2
+table(label_01, truelabel)
+```
+
+```{r message=FALSE, warning=FALSE, fig.height=5, fig.width=7}
+## Enable full annotation function: assign the full spectrum of labels
+label_all <- CAMLU(x_train = simdata$fdata_train,
+                  x_test = simdata$fdata_test,
+                  y_train = simdata$labels_train,
+                  full_annotation = TRUE,
+                  ngene=5000,log=TRUE)
+
+## Display the classification table
+truelabel_all <- simdata$labels_test
+truelabel_all[truelabel_all == "HNCC"] <- "Unknown"
+table(label_all$label_full, truelabel_all)
+
+## Calculate the accuracy
+sum(label_all$label_full == truelabel_all)/ length(truelabel_all)
+```
+
+## Reference
+
+Zheng, G. X., Terry, J. M., Belgrader, P., Ryvkin, P., Bent, Z.W.,Wilson, R., Ziraldo,
+S. B., Wheeler, T. D., McDermott, G. P., Zhu, J., *et al.* (2017). Massively parallel
+digital transcriptional profiling of single cells. *Nature communications*, 8(1), 1–12.
