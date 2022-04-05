@@ -2,8 +2,7 @@
 
 `CAMLU` is an R package that provides an autoencoder based method for annotating cell types from scRNA-seq data. The function can identify unknown cells with the input training data. It also can annotate the full lists of cell types with consideration of unknown cell types. This vignette introduces the CAMLU function and the things it can do for you. CAMLU was created by Ziyi Li, Yizhuo Wang, Irene Ganan-Gomez, Simona Colla and Kim-Anh Do, and is now maintained by Ziyi Li (zli16@mdanderson.org).
 
-[Schematic plot of CAMLU](https://github.com/ziyili20/CAMLU/tree/main/img/Sche.png?raw=true)
-
+<img width="1070" alt="Sche" src="https://user-images.githubusercontent.com/24440640/161843184-cb90a9a9-1264-408d-aa98-80c849af0082.png">
 
 ## Installation
 
