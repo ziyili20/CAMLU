@@ -17,6 +17,11 @@ install_github("ziyili20/CAMLU", build_vignettes = TRUE)
 library(CAMLU)
 ```
 
+Note that CAMLU relies on the R keras package (https://cran.r-project.org/web/packages/keras/index.html). You can install it through:
+```
+install.packages('keras')
+```
+
 ### How to get help for CAMLU
 
 Any questions should be posted
