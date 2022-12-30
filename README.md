@@ -13,7 +13,7 @@ To install this package, start R (version "3.6" or higher) and enter:
 install.packages("devtools")
 library(devtools)
 
-install_github("ziyili20/CAMLU", build_vignettes = TRUE)
+install_github("ziyili20/CAMLU", build_vignettes = FALSE)
 library(CAMLU)
 ```
 
